@@ -1,3 +1,4 @@
+import java.security.KeyStore.Entry;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +105,27 @@ public class Build {
    * @return a set of values that cannot be reached from the starting value
    */
   public static <T> Set<T> unreachable(Map<T, List<T>> graph, T starting) {
-    return new HashSet<>();
+    if(graph == null) return new HashSet<>();
+
+    Set<T> visited = new HashSet<>();
+    reachable(graph,starting,visited);
+
+    Set<T> unreached = new HashSet<>();
+    for(var vertex : graph.keySet()){
+      if(!visited.contains(vertex)){
+        unreached.add(vertex);
+      }
+    }
+    return unreached;
+  }
+
+  private static <T> void reachable(Map<T, List<T>> graph, T current, Set<T> set){
+    if(set.contains(current))return;
+    set.add(current);
+
+    if(graph.get(current) == null)return;
+    for(var next : graph.get(current)){
+      reachable(graph, next, set);
+    }
   }
 }
