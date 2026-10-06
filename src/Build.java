@@ -18,15 +18,15 @@ public class Build {
     printShortWords(vertex,k,new HashSet<>());
   }
 
-  private  static void printShortWords(Vertex<String> current, int max, Set<Vertex<String>> visted){
-      if(visted.contains(current)||current==null) return;
-      visted.add(current);
+  private  static void printShortWords(Vertex<String> current, int max, Set<Vertex<String>> visited){
+      if(visited.contains(current)||current==null) return;
+      visited.add(current);
 
       if(current.data.length()<max){
         System.out.println(current.data);
       }
       for(var neighbor: current.neighbors){
-        printShortWords(neighbor, max, visted);
+        printShortWords(neighbor, max, visited);
       }
   }
 
