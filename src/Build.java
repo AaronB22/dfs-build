@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 
 public class Build {
@@ -59,6 +60,24 @@ public class Build {
    * @return true if the destination is reachable from the start, false otherwise
    */
   public static boolean canReach(Airport start, Airport destination) {
+    Set<Airport> set = new HashSet<>();
+
+    Stack<Airport> stack = new Stack<>();
+    stack.push(start);
+
+    while(!stack.isEmpty()){
+      Airport current = stack.pop();
+      if(set.contains(current))continue;
+      set.add(current);
+
+      if(current == destination)return true;
+
+      for(Airport stop : current.getOutboundFlights()){
+        stack.add(stop);
+      } 
+
+    }
+    
     return false;
   }
 
