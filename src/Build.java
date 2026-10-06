@@ -23,7 +23,21 @@ public class Build {
    * @return the longest reachable word, or an empty string if the vertex is null
    */
   public static String longestWord(Vertex<String> vertex) {
-    return "";
+    Set<Vertex<String>> set = new HashSet<>();
+    return longestWord(vertex,set);
+  }
+
+  private static String longestWord(Vertex<String> vertex, Set<Vertex<String>> set) {
+    if(vertex == null || set.contains(vertex))return "";
+    set.add(vertex);
+
+    String longest = vertex.data;
+    for(Vertex<String> neighbor : vertex.neighbors){
+      String string = longestWord(neighbor,set);
+      if(string.length() > longest.length()) longest = string;
+    }
+    return longest;
+    
   }
 
   /**
