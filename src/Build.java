@@ -1,4 +1,3 @@
-import java.security.KeyStore.Entry;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -66,14 +65,16 @@ public class Build {
     printSelfLoopers(vertex, new HashSet<>());
   }
 
-  private  static <T> void printSelfLoopers(Vertex<T> vertex, Set<Vertex<T>> visted){
-    if(vertex==null||visted.contains(vertex)) return ;
-    visted.add(vertex);
+  private  static <T> void printSelfLoopers(Vertex<T> vertex, Set<Vertex<T>> visited){
+    if(vertex==null||visited.contains(vertex)) return ;
+    visited.add(vertex);
     if(vertex.neighbors.isEmpty())return;
     
-    System.out.println(vertex.data);
     for(var neighbor: vertex.neighbors){
-        printSelfLoopers(neighbor,visted);
+      
+      if(neighbor == vertex) System.out.println(vertex.data);
+      
+      printSelfLoopers(neighbor,visited);
     }
   }
 
